@@ -49,6 +49,11 @@ const GameBoard: React.FC = () => {
     }
   }, [cards]);
 
+  const randomizeLetters = () => {
+    const shuffledLetters = [...letters].sort(() => Math.random() - 0.5);
+    return shuffledLetters;
+  };
+
   return (
     <>
       <div className="grid grid-cols-4 gap-8 p-11">
