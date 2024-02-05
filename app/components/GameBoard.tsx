@@ -7,7 +7,7 @@ type Card = {
   value: string;
 };
 
-const letters: string[] = [
+const initialLetters: string[] = [
   "A",
   "A",
   "B",
@@ -32,6 +32,11 @@ const GameBoard: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const [moves, setMoves] = useState<number>(0);
   const [gameStatus, setGameStatus] = useState<string>("");
+  const [shuffledLetters, setShuffledLetters] = useState<string[]>([]);
+
+  useEffect(() => {
+    randomiseLetters();
+  }, []);
 
   useEffect(() => {
     if (cards.length === 2) {
@@ -50,13 +55,14 @@ const GameBoard: React.FC = () => {
   }, [cards]);
 
   const randomiseLetters = () => {
-    const shuffledLetters = [...letters].sort(() => Math.random() - 0.5);
-    return shuffledLetters;
+    const shuffledLetters = [...initialLetters].sort(() => Math.random() - 0.5);
+    setShuffledLetters(shuffledLetters);
+    setCards([]);
+    setMatchedPairs([]);
+    setScore(0);
+    setMoves(0);
+    setGameStatus("");
   };
-
-  useEffect(() => {
-    randomiseLetters();
-  }, []);
 
   const handleShowCard = (index: number) => {
     if (
@@ -66,26 +72,53 @@ const GameBoard: React.FC = () => {
       return;
     }
 
-    const newCard = { index, value: letters[index] };
+    const newCard = { index, value: shuffledLetters[index] };
     setCards((prev) => [...prev, newCard]);
-
-    if (cards.length === 0) {
-      setMoves((prevMoves) => prevMoves + 1);
-    }
   };
 
   useEffect(() => {
-    if (matchedPairs.length === letters.length) {
+    if (matchedPairs.length === initialLetters.length) {
       setGameStatus(`Well done! You matched the letters in ${moves} moves`);
     }
   }, [matchedPairs, moves]);
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-8 p-11">
-        {letters.map((letter, i) => (
-          <div key={i}>{letter}</div>
-        ))}
+      <div className=" lg:grid lg:grid-cols-2  ">
+        <div className="grid lg:grid-cols-4 xs:grid-cols-4 xs:gap-1 gap-6 p-2">
+          {shuffledLetters.map((letter, index) => (
+            <div
+              key={index}
+              className="text-black rounded-md cursor-pointer p-1 flex items-center justify-center border-grey-200"
+              onClick={() => handleShowCard(index)}
+            >
+              {matchedPairs.includes(index) ||
+              cards.some((card) => card.index === index) ? (
+                <span className="letter">{letter}</span>
+              ) : (
+                <span className="text-black">?</span>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col items-center justify-center p-4">
+          <h1 className="lg:text-6xl xs:text-4xl xs:pt-4 font-bold mb-2">
+            Match the Letters
+          </h1>
+
+          <button
+            onClick={randomiseLetters}
+            className="px-4 py-2 lg:mt-5 xs:mt-4 lg:text-2xl xs:text-[12px] border border-gray-300 rounded-3xl"
+          >
+            Restart Game
+          </button>
+
+          {gameStatus && (
+            <div className="game-status-message pt-5 lg:text-2xl xs:text-[18px]">
+              {gameStatus}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
