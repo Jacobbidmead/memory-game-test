@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-let letters = [
+let letters: string[] = [
   "A",
   "A",
   "B",
@@ -20,7 +20,7 @@ let letters = [
 const GameBoard: React.FC = () => {
   return (
     <>
-      <div>
+      <div className="">
         {letters.map((letter, i) => (
           <div key={i}>{letter}</div>
         ))}
