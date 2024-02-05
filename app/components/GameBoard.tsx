@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react";
 
-interface Icons {
+type Card = {
   index: number;
-  value: number;
-}
+  value: string;
+};
 
-let letters: string[] = [
+const letters: string[] = [
   "A",
   "A",
   "B",
@@ -27,10 +27,28 @@ let letters: string[] = [
 ];
 
 const GameBoard: React.FC = () => {
-  const [icons, setIcons] = useState([]);
-  const [showIcons, setShowIcons] = useState<number[]>([]);
+  const [cards, setCards] = useState<Card[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
-  const [countMovies, setCountMoves] = useState<number>(0);
+  const [score, setScore] = useState<number>(0);
+  const [moves, setMoves] = useState<number>(0);
+  const [gameStatus, setGameStatus] = useState<string>("");
+
+  useEffect(() => {
+    if (cards.length === 2) {
+      setMoves((prevMoves) => prevMoves + 1);
+      const [firstCard, secondCard] = cards;
+      if (firstCard.value === secondCard.value) {
+        setMatchedPairs((prevMatchedPairs) => [
+          ...prevMatchedPairs,
+          firstCard.index,
+          secondCard.index,
+        ]);
+        setScore((prevScore) => prevScore + 1);
+      }
+      setTimeout(() => setCards([]), 1000); // Clear cards after 1 second
+    }
+  }, [cards]);
+
   return (
     <>
       <div className="grid grid-cols-4 gap-8 p-11">
