@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 let letters: string[] = [
@@ -13,6 +15,8 @@ let letters: string[] = [
   "E",
   "F",
   "F",
+  "G",
+  "G",
   "H",
   "H",
 ];
@@ -20,7 +24,7 @@ let letters: string[] = [
 const GameBoard: React.FC = () => {
   return (
     <>
-      <div className="">
+      <div className="grid grid-cols-4 gap-8 p-11">
         {letters.map((letter, i) => (
           <div key={i}>{letter}</div>
         ))}

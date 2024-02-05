@@ -1,4 +1,4 @@
-import GameBoard from "./components/gameBoard";
+import GameBoard from "./components/GameBoard";
 
 const GameScreen: React.FC = () => {
   return (
