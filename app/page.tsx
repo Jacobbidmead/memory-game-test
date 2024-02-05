@@ -1,9 +1,9 @@
-import Image from "next/image";
-
-export default function Home() {
+const GameScreen: React.FC = () => {
   return (
     <>
       <div>Hello</div>
     </>
   );
-}
+};
+
+export default GameScreen;
