@@ -58,6 +58,22 @@ const GameBoard: React.FC = () => {
     randomiseLetters();
   }, []);
 
+  const handleShowCard = (index: number) => {
+    if (
+      matchedPairs.includes(index) ||
+      cards.some((card) => card.index === index)
+    ) {
+      return;
+    }
+
+    const newCard = { index, value: letters[index] };
+    setCards((prev) => [...prev, newCard]);
+
+    if (cards.length === 0) {
+      setMoves((prevMoves) => prevMoves + 1);
+    }
+  };
+
   return (
     <>
       <div className="grid grid-cols-4 gap-8 p-11">
