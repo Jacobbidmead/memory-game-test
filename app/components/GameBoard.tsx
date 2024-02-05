@@ -74,6 +74,12 @@ const GameBoard: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (matchedPairs.length === letters.length) {
+      setGameStatus(`Well done! You matched the letters in ${moves} moves`);
+    }
+  }, [matchedPairs, moves]);
+
   return (
     <>
       <div className="grid grid-cols-4 gap-8 p-11">
