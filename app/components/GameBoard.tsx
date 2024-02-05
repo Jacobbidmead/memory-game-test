@@ -49,10 +49,14 @@ const GameBoard: React.FC = () => {
     }
   }, [cards]);
 
-  const randomizeLetters = () => {
+  const randomiseLetters = () => {
     const shuffledLetters = [...letters].sort(() => Math.random() - 0.5);
     return shuffledLetters;
   };
+
+  useEffect(() => {
+    randomiseLetters();
+  }, []);
 
   return (
     <>
