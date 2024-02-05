@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Scoreboard from "./Scoreboard";
 
 type Card = {
   index: number;
@@ -112,7 +113,7 @@ const GameBoard: React.FC = () => {
           >
             Restart Game
           </button>
-
+          <Scoreboard score={score} moves={moves} />
           {gameStatus && (
             <div className="game-status-message pt-5 lg:text-2xl xs:text-[18px]">
               {gameStatus}
